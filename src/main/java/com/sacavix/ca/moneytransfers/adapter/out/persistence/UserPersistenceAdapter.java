@@ -15,8 +15,7 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
     }
 
     @Override
-    public User load(String username) {
-        Long id = 3L;
+    public User load(Long id) {
         return userRepository
                 .findById(id)
                 .map(UserMapper::entityToDomain)
@@ -25,6 +24,12 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
 
     @Override
     public void update(User user) {
+
+        userRepository.save(UserMapper.domainToEntity(user));
+    }
+
+    @Override
+    public void save(User user) {
         userRepository.save(UserMapper.domainToEntity(user));
     }
 }

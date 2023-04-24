@@ -18,10 +18,8 @@ public class ReadUserService implements ReadUserPort {
 
     @Transactional
     @Override
-    public User read(String username) {
-        System.out.println(username);
-        User user = loadUserPort.load(username);
-        System.out.println(user.getUsername());
+    public User read(Long id) {
+        User user = loadUserPort.load(id);
 
         return user;
     }

@@ -39,10 +39,10 @@ public class UserController {
         saveUserPort.save(command);
     }
 
-    @GetMapping("/user/{username}")
-    public UserEntity readUser(@PathVariable String username) {
+    @GetMapping("/user/{id}")
+    public UserEntity readUser(@PathVariable Long id) {
 
-        User user = readUserPort.read(username);
+        User user = readUserPort.read(id);
         return UserMapper.domainToEntity(user);
     }
 

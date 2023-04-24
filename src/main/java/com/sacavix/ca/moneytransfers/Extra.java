@@ -27,5 +27,7 @@ public class Extra implements InitializingBean {
         this.extra.save(new AccountEntity(1L, BigDecimal.valueOf(20)));
         this.extra.save(new AccountEntity(2L, BigDecimal.valueOf(25)));
         this.extra2.save(new UserEntity(10L, "aa", "bb", "cc"));
+        this.extra2.save(new UserEntity(11L, "aa2", "bb", "cc"));
+        this.extra2.save(new UserEntity(12L, "aa3", "bb", "cc"));
     }
 }

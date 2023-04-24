@@ -4,5 +4,6 @@ import com.sacavix.ca.moneytransfers.domain.User;
 
 public interface UpdateUserPort {
 
+    void save(User user);
     void update(User user);
 }
