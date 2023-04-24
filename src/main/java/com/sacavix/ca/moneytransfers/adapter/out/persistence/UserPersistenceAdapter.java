@@ -5,6 +5,9 @@ import com.sacavix.ca.moneytransfers.application.port.out.UpdateUserPort;
 import com.sacavix.ca.moneytransfers.common.PersistenceAdapter;
 import com.sacavix.ca.moneytransfers.domain.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @PersistenceAdapter
 public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
 
@@ -23,6 +26,18 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
     }
 
     @Override
+    public List<User> loadAll() {
+        List<UserEntity> usersDB = userRepository.findAll();
+
+        List<User> users = new ArrayList<>();
+        for (UserEntity userDB : usersDB) {
+            users.add(UserMapper.entityToDomain(userDB));
+        }
+
+        return users;
+    }
+
+    @Override
     public void update(User user) {
 
         userRepository.save(UserMapper.domainToEntity(user));
@@ -31,5 +46,13 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
     @Override
     public void save(User user) {
         userRepository.save(UserMapper.domainToEntity(user));
+    }
+
+    @Override
+    public void delete(Long id) {
+        UserEntity user = userRepository
+                .findById(id)
+                .orElseThrow(RuntimeException::new);
+        userRepository.delete(user);
     }
 }

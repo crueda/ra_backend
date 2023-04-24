@@ -6,4 +6,6 @@ public interface UpdateUserPort {
 
     void save(User user);
     void update(User user);
+
+    void delete(Long id);
 }

@@ -6,6 +6,7 @@ import com.sacavix.ca.moneytransfers.common.UseCase;
 import com.sacavix.ca.moneytransfers.domain.User;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @UseCase
 public class ReadUserService implements ReadUserPort {
@@ -23,4 +24,13 @@ public class ReadUserService implements ReadUserPort {
 
         return user;
     }
+
+    @Transactional
+    @Override
+    public List<User> readAll() {
+        List<User> users = loadUserPort.loadAll();
+
+        return users;
+    }
+
 }

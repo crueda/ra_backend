@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SaveUserCommand {
+    private Long id;
     private String username;
     private String name;
     private String email;

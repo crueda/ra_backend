@@ -24,9 +24,6 @@ public class SaveUserService implements SaveUserPort {
     @Override
     public boolean save(SaveUserCommand command) {
 
-        //long id = 3L;
-
-        //User target = loadUserPort.load(id);
         User user = new User();
         user.setUsername(command.getUsername());
         user.setName(command.getName());
@@ -41,11 +38,24 @@ public class SaveUserService implements SaveUserPort {
     @Override
     public boolean update(SaveUserCommand command) {
 
-        long id = 3L;
-        User target = loadUserPort.load(id);
+        User user = new User();
+        user.setId(command.getId());
+        user.setUsername(command.getUsername());
+        user.setName(command.getName());
+        user.setEmail(command.getEmail());
 
-        updateUserPort.update(target);
+        updateUserPort.update(user);
 
         return true;
     }
+
+    @Transactional
+    @Override
+    public boolean delete(Long id) {
+
+        updateUserPort.delete(id);
+
+        return true;
+    }
+
 }
