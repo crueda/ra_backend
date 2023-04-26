@@ -1,7 +1,7 @@
 package com.sacavix.ca.moneytransfers;
 
-import com.sacavix.ca.moneytransfers.adapter.out.persistence.SpringAccountRepository;
-import com.sacavix.ca.moneytransfers.adapter.out.persistence.AccountEntity;
+import com.sacavix.ca.moneytransfers.adapters.out.persistence.SpringAccountRepository;
+import com.sacavix.ca.moneytransfers.adapters.out.persistence.AccountEntity;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
