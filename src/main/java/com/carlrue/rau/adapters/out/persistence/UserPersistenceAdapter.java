@@ -45,6 +45,7 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
 
     @Override
     public void save(User user) {
+
         userRepository.save(UserMapper.domainToEntity(user));
     }
 

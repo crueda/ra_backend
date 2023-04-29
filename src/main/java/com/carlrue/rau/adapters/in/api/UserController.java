@@ -16,6 +16,7 @@ import java.util.List;
 
 @WebAdapter
 @RestController
+@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 public class UserController {
 
     private final SaveUserPort saveUserPort;
@@ -29,6 +30,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/user")
+    @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
     void createUser(@RequestBody UserRequest userRequest) {
 
         String username = new String(userRequest.getUsername());
@@ -44,6 +46,7 @@ public class UserController {
     }
 
     @PutMapping(path = "/user")
+    @ResponseStatus(code = HttpStatus.OK, reason = "UPDATED")
     void updateUser(@RequestBody UserRequest userRequest) {
 
         Long id = (long)userRequest.getId();
@@ -60,6 +63,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/user")
+    @ResponseStatus(code = HttpStatus.OK, reason = "DELETED")
     void deleteUser(@RequestBody UserRequest userRequest) {
 
         Long id = (long)userRequest.getId();
@@ -68,6 +72,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
     public UserEntity readUser(@PathVariable Long id) {
 
         User user = readUserPort.read(id);
@@ -75,6 +80,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @ResponseStatus(code = HttpStatus.OK)
     public ResponseEntity<List<User>> allUsers() {
         List<User> users = readUserPort.readAll();
 
