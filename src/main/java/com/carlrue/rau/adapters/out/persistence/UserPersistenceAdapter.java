@@ -1,5 +1,6 @@
 package com.carlrue.rau.adapters.out.persistence;
 
+import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.ports.out.LoadUserPort;
 import com.carlrue.rau.ports.out.UpdateUserPort;
 import com.carlrue.rau.common.PersistenceAdapter;
@@ -22,7 +23,9 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
         return userRepository
                 .findById(id)
                 .map(UserMapper::entityToDomain)
-                .orElseThrow(RuntimeException::new); // TODO: improve exception
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "Id", id)
+                );
     }
 
     @Override

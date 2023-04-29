@@ -29,7 +29,8 @@ public class UserController {
         this.readUserPort = readUserPort;
     }
 
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/api/user")
+    @CrossOrigin(origins = "*")
     @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
     void createUser(@RequestBody UserRequest userRequest) {
 
@@ -45,7 +46,8 @@ public class UserController {
         saveUserPort.save(command);
     }
 
-    @PutMapping(path = "/user")
+    @PutMapping(path = "/api/user")
+    @CrossOrigin(origins = "*")
     @ResponseStatus(code = HttpStatus.OK, reason = "UPDATED")
     void updateUser(@RequestBody UserRequest userRequest) {
 
@@ -62,7 +64,8 @@ public class UserController {
         saveUserPort.update(command);
     }
 
-    @DeleteMapping(path = "/user")
+    @DeleteMapping(path = "/api/user")
+    @CrossOrigin(origins = "*")
     @ResponseStatus(code = HttpStatus.OK, reason = "DELETED")
     void deleteUser(@RequestBody UserRequest userRequest) {
 
@@ -71,7 +74,8 @@ public class UserController {
         saveUserPort.delete(id);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/api/user/{id}")
+    @CrossOrigin(origins = "*")
     @ResponseStatus(code = HttpStatus.OK)
     public UserEntity readUser(@PathVariable Long id) {
 
@@ -79,7 +83,8 @@ public class UserController {
         return UserMapper.domainToEntity(user);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/api/users")
+    @CrossOrigin(origins = "*")
     @ResponseStatus(code = HttpStatus.OK)
     public ResponseEntity<List<User>> allUsers() {
         List<User> users = readUserPort.readAll();

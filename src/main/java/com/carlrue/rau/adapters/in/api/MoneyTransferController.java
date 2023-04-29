@@ -19,7 +19,7 @@ public class MoneyTransferController {
         this.sendMoneyPort = sendMoneyPort;
     }
 
-    @PostMapping(path = "/accounts/transfer/{sourceAccountId}/{targetAccountId}/{amount}")
+    @PostMapping(path = "/api/accounts/transfer/{sourceAccountId}/{targetAccountId}/{amount}")
     void transfer(
             @PathVariable("sourceAccountId") Long sourceAccountId,
             @PathVariable("targetAccountId") Long targetAccountId,

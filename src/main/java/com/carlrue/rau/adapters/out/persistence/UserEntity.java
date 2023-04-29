@@ -24,4 +24,12 @@ public class UserEntity {
     private String name;
     private String email;
 
+
+    /* public UserEntity(Long id, String username, String name, String email) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+    } */
+
 }
