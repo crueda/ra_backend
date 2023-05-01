@@ -49,7 +49,7 @@ class UserControllerTest {
     @BeforeEach
     void setUp() {
         this.expectedUserList = new ArrayList<>();
-        this.expectedUserList.add(new UserEntity(1L, "alosobri", "Alonso Briceño", "alonsobri@gmail.com"));
+        this.expectedUserList.add(new UserEntity(1L, "alosobri", "Alonso Briceno", "alonsobri@gmail.com"));
         this.expectedUserList.add(new UserEntity(2L, "juanrol", "Juan Roldán", "juanrol@gmail.com"));
         this.expectedUserList.add(new UserEntity(3L, "crisper", "Cristobal de Peralta", "crisper@gmail.com"));
     }
@@ -59,7 +59,7 @@ class UserControllerTest {
     void givenUserIdThenReturnsUserData() throws Exception {
         // Given
         long id = 1L;
-        doReturn(this.expectedUserList.get(0)).when(UserMapper.domainToEntity(readUserService.read(id)));
+        doReturn(UserMapper.entityToDomain(this.expectedUserList.get(0))).when(readUserService).read(id);
 
         // When
         MockHttpServletResponse response = mockMvc.perform(get("/api/user/{id}", id)
