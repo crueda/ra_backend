@@ -106,11 +106,11 @@ class UserControllerTest {
     @Test
     void createdNewUserReturnsThatUser() throws Exception {
         UserEntity newUser = new UserEntity(4L, "andrescon", "Andrés Contero", "andrecon@gmail.com");
-        /* SaveUserCommand command = new SaveUserCommand(null,
+        SaveUserCommand command = new SaveUserCommand(null,
                 newUser.getUsername(),
                 newUser.getName(),
                 newUser.getEmail());
-        doReturn(newUser).when(saveUserService).save(command);*/
+        doReturn(true).when(saveUserService).save(command);
 
         MockHttpServletResponse response = mockMvc.perform(post("/api/user")
                     .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -119,18 +119,21 @@ class UserControllerTest {
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-        //assertEquals(jsonUser.write(newUser).getJson(), response.getContentAsString());
     }
-/*
+
     @Test
     void givenUpdatedUserThenReturnsUserDataUpdated() throws Exception {
         long id = 1L;
-        User updatedUser = this.expectedUserList.get(0).setName("Francisco Moyano");
-//        doReturn(updatedUser).when(userService).updateUser(any(User.class), eq(id));
-        doReturn(updatedUser).when(userService).updateUser(eq(updatedUser), eq(id));
+        UserEntity updatedUser = this.expectedUserList.get(0);
+        updatedUser.setName("Francisco Moyano");
+        SaveUserCommand command = new SaveUserCommand(null,
+                updatedUser.getUsername(),
+                updatedUser.getName(),
+                updatedUser.getEmail());
+        doReturn(true).when(saveUserService).save(command);
 
         MockHttpServletResponse response = mockMvc
-                .perform(put("/api/user/{id}", id)
+                .perform(put("/api/user")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(jsonUser.write(updatedUser).getJson())
                         .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -139,9 +142,9 @@ class UserControllerTest {
 
         // Then
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(jsonUser.write(updatedUser).getJson(), response.getContentAsString());
     }
 
+    /*
     @Test
     void tryingToUpdateNotExistingUserIdThenReturns404() throws Exception {
         long id = 5L;
