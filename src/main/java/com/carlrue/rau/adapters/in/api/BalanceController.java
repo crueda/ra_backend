@@ -1,9 +1,12 @@
 package com.carlrue.rau.adapters.in.api;
 
+import com.carlrue.rau.domain.entities.Balance;
 import com.carlrue.rau.ports.in.BalancePort;
 import com.carlrue.rau.common.WebAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @WebAdapter
 @RestController
@@ -15,11 +18,10 @@ public class BalanceController {
         this.balancePort = balancePort;
     }
 
-/*    @GetMapping(path = "/api/balance")
-    void getBalance(
-
-        balancePort.calculate();
+    @GetMapping(path = "/api/balance")
+    public List<Balance> getBalance() {
+        return balancePort.calculate();
     }
-*/
+
 
 }
