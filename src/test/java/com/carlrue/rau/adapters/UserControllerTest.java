@@ -104,7 +104,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createdNewUserReturnsThatUser() throws Exception {
+    void createdNewUserReturnsTrue() throws Exception {
         UserEntity newUser = new UserEntity(4L, "andrescon", "Andrés Contero", "andrecon@gmail.com");
         SaveUserCommand command = new SaveUserCommand(null,
                 newUser.getUsername(),
@@ -122,7 +122,7 @@ class UserControllerTest {
     }
 
     @Test
-    void givenUpdatedUserThenReturnsUserDataUpdated() throws Exception {
+    void givenUpdatedUserThenReturnsTrue() throws Exception {
         long id = 1L;
         UserEntity updatedUser = this.expectedUserList.get(0);
         updatedUser.setName("Francisco Moyano");
@@ -144,27 +144,11 @@ class UserControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    /*
-    @Test
-    void tryingToUpdateNotExistingUserIdThenReturns404() throws Exception {
-        long id = 5L;
-        User updatedUser = new User(id, "Álvaro Moyano");
-        when(userService.updateUser(any(User.class), eq(id))).thenThrow(ResourceNotFoundException.class);
-
-        MockHttpServletResponse response = mockMvc.perform(put("/api/user/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(jsonUser.write(updatedUser).getJson())
-                        .accept(MediaType.APPLICATION_JSON)
-                )
-                .andReturn().getResponse();
-
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
-    }
 
     @Test
     void whenDeleteUserReturnsNone() throws Exception {
         long id = 1L;
-        doNothing().when(userService).deleteUser(id);
+        doNothing().when(saveUserService).delete(id);
 
         MockHttpServletResponse response = mockMvc.perform(delete("/api/user/{id}", id)
                         .accept(MediaType.APPLICATION_JSON)
@@ -178,17 +162,15 @@ class UserControllerTest {
     @Test
     void tryingToDeleteNotExistingUserIdThenReturns404() throws Exception {
         long id = 4L;
-        when(userService.deleteUser(id)).thenThrow(ResourceNotFoundException.class);
+        when(saveUserService.delete(id)).thenThrow(ResourceNotFoundException.class);
 
-        MockHttpServletResponse response = mockMvc.perform(delete("/api/user/{id}", id)
+        MockHttpServletResponse response = mockMvc.perform(delete("/api/user", id)
                         .accept(MediaType.APPLICATION_JSON)
                 )
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
-
-    */
 
 
 }

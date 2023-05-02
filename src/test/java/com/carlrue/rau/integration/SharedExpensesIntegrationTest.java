@@ -1,4 +1,4 @@
-package com.carlrue.rau;
+package com.carlrue.rau.integration;
 
 import com.carlrue.rau.adapters.out.persistence.SpringUserRepository;
 import com.carlrue.rau.adapters.out.persistence.UserPersistenceAdapter;
@@ -12,7 +12,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
-public class MoneytransfersIntegrationTest {
+public class SharedExpensesIntegrationTest {
 
     private final SpringUserRepository userRepository;
 
@@ -20,7 +20,7 @@ public class MoneytransfersIntegrationTest {
     public GenericContainer mysqldb = new GenericContainer(DockerImageName.parse("mysql:latest"))
             .withExposedPorts(3306);
 
-    public MoneytransfersIntegrationTest(SpringUserRepository userRepository) {
+    public SharedExpensesIntegrationTest(SpringUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
