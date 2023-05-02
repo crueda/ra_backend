@@ -3,6 +3,7 @@ package com.carlrue.rau.adapters.in.api;
 import com.carlrue.rau.domain.entities.Balance;
 import com.carlrue.rau.ports.in.BalancePort;
 import com.carlrue.rau.common.WebAdapter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ public class BalanceController {
     }
 
     @GetMapping(path = "/api/balance")
+    @CrossOrigin(origins = "*")
     public List<Balance> getBalance() {
         return balancePort.calculate();
     }
