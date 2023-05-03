@@ -59,8 +59,8 @@ public class SaveUserService implements SaveUserPort {
     @Transactional
     @Override
     public boolean delete(Long id) {
-
-        updateUserPort.delete(id);
+        User user = loadUserPort.load(id);
+        updateUserPort.delete(user.getId());
 
         return true;
     }

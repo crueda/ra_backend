@@ -8,6 +8,7 @@ import com.carlrue.rau.domain.usecases.ReadUserService;
 import com.carlrue.rau.domain.usecases.SaveUserService;
 import com.carlrue.rau.adapters.in.api.UserController;
 import com.carlrue.rau.ports.in.SaveUserCommand;
+import com.carlrue.rau.ports.in.UserRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,13 +145,17 @@ class UserControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-/*
-    @Test
-    void whenDeleteUserReturnsNone() throws Exception {
-        long id = 1L;
-        doNothing().when(saveUserService).delete(id);
 
-        MockHttpServletResponse response = mockMvc.perform(delete("/api/user/{id}", id)
+    @Test
+    void whenDeleteUserReturnsOk() throws Exception {
+        long id = 1L;
+        doReturn(true).when(saveUserService).delete(id);
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(id);
+        MockHttpServletResponse response = mockMvc.perform(delete("/api/user")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(jsonUser.write(userEntity).getJson())
                         .accept(MediaType.APPLICATION_JSON)
                 )
                 .andReturn().getResponse();
@@ -158,14 +163,18 @@ class UserControllerTest {
         // Then
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
-*/
-    /*
+
+
     @Test
     void tryingToDeleteNotExistingUserIdThenReturns404() throws Exception {
         long id = 6L;
-        when(saveUserService.delete(id)).thenThrow(ResourceNotFoundException.class);
+        doReturn(false).when(saveUserService).delete(id);
 
-        MockHttpServletResponse response = mockMvc.perform(delete("/api/user", id)
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(id);
+        MockHttpServletResponse response = mockMvc.perform(delete("/api/user")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(jsonUser.write(userEntity).getJson())
                         .accept(MediaType.APPLICATION_JSON)
                 )
                 .andReturn().getResponse();
@@ -173,5 +182,5 @@ class UserControllerTest {
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
-*/
+
 }

@@ -41,22 +41,37 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
+        User userToUpdate = userRepository
+                .findById(user.getId())
+                .map(UserMapper::entityToDomain)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "Id", user.getId())
+                );
 
-        userRepository.save(UserMapper.domainToEntity(user));
+        userRepository.save(UserMapper.domainToEntity(userToUpdate));
+
+        return true;
     }
 
     @Override
-    public void save(User user) {
+    public boolean save(User user) {
 
         userRepository.save(UserMapper.domainToEntity(user));
+
+        return true;
     }
 
     @Override
-    public void delete(Long id) {
-        UserEntity user = userRepository
+    public boolean delete(Long id) {
+        User userToDelete = userRepository
                 .findById(id)
-                .orElseThrow(RuntimeException::new);
-        userRepository.delete(user);
+                .map(UserMapper::entityToDomain)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User", "Id", id)
+                );
+        userRepository.delete(UserMapper.domainToEntity(userToDelete));
+
+        return true;
     }
 }

@@ -4,8 +4,8 @@ import com.carlrue.rau.domain.entities.User;
 
 public interface UpdateUserPort {
 
-    void save(User user);
-    void update(User user);
+    boolean save(User user);
+    boolean update(User user);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }

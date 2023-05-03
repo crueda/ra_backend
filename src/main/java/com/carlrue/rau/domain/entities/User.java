@@ -14,8 +14,9 @@ public class User {
     private String name;
     private String email;
 
-    private static final int MINIMUM_CHARACTER_LIMIT = 4;
+    private static final int MIN_CHARACTER_LIMIT = 4;
+    private static final int MAX_CHARACTER_LIMIT = 21;
     public boolean usernameIsValid() {
-        return username != null && username.length() >= MINIMUM_CHARACTER_LIMIT;
+        return username != null && username.length() >= MIN_CHARACTER_LIMIT && username.length() < MAX_CHARACTER_LIMIT;
     }
 }

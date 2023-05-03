@@ -1,6 +1,7 @@
 package com.carlrue.rau.domain.usecases;
 
 
+import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.domain.usecases.SaveUserService;
 import com.carlrue.rau.ports.in.SaveUserCommand;
@@ -15,9 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SaveUserServiceTest {
@@ -42,60 +43,60 @@ class SaveUserServiceTest {
 
     @Test
     void createUserWhenUserIsProvided() {
-        User expectedNewUser = new User(4L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
-        SaveUserCommand command = new SaveUserCommand(4L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
-        //doReturn((expectedNewUser)).when(updateUserPort).save(expectedNewUser);
+        User expectedNewUser = new User(null, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        SaveUserCommand command = new SaveUserCommand(null, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        doReturn(true).when(updateUserPort).save(expectedNewUser);
 
         boolean result = saveUserService.save(command);
 
         assertEquals(result, true);
     }
 
-    /*
+
     @Test
     void updateUserWhenIsEdited() {
-        Optional<User> optExpectedUser = Optional.ofNullable(expectedUserList.get(0));
-        doReturn(optExpectedUser).when(userRepository).findById(1L);
-        User expectedUpdatedUser = this.expectedUserList.get(0);
-        expectedUpdatedUser.setName("Pablo Álvarez");
-        doReturn(expectedUpdatedUser).when(userRepository).save(any());
+        User expectedUpdateUser = new User(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        SaveUserCommand command = new SaveUserCommand(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        doReturn(true).when(updateUserPort).update(expectedUpdateUser);
 
-        User user = userService.updateUser(expectedUpdatedUser, 1L);
+        boolean result = saveUserService.update(command);
 
-        assertNotNull(user);
-        assertEquals(expectedUpdatedUser, user);
+        assertEquals(result, true);
     }
+
 
     @Test
     void tryingToUpdateNotExistingUserIdThenReturnsResourceNotFoundException() {
+        User expectedUpdateUser = this.expectedUserList.get(0);
+        SaveUserCommand command = new SaveUserCommand(expectedUpdateUser.getId(), expectedUpdateUser.getUsername(), expectedUpdateUser.getName(), expectedUpdateUser.getEmail());
+
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> when(userService.updateUser(this.expectedUserList.get(0), 1L)),
+                () -> when(saveUserService.update(command)),
                 "ResourceNotFoundException was expected"
         );
 
         assertTrue(exception.getMessage().contains("User not found with Id: '1'"));
     }
 
+
     @Test
     void deleteUserById() {
-        Optional<User> optExpectedUser = Optional.ofNullable(expectedUserList.get(0));
-        doReturn(optExpectedUser).when(userRepository).findById(1L);
+        User optExpectedUser = expectedUserList.get(0);
+        doReturn(optExpectedUser).when(loadUserPort).load(1L);
 
-        assertNull(userService.deleteUser(1L));
+        assertFalse(saveUserService.delete(1L));
     }
 
     @Test
     void tryingToDeleteNotExistingUserIdThenReturnsResourceNotFoundException() {
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> when(userService.deleteUser(1L)),
+                () -> when(saveUserService.delete(1L)),
                 "ResourceNotFoundException was expected"
         );
 
         assertTrue(exception.getMessage().contains("User not found with Id: '1'"));
     }
 
-
-     */
 }
