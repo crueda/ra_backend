@@ -2,9 +2,11 @@ package com.carlrue.rau.domain.usecases;
 
 import com.carlrue.rau.domain.entities.Balance;
 import com.carlrue.rau.domain.entities.Expense;
+import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.in.BalancePort;
 import com.carlrue.rau.common.UseCase;
 import com.carlrue.rau.ports.out.LoadExpensePort;
+import com.carlrue.rau.ports.out.LoadUserPort;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -20,8 +22,11 @@ public class BalanceService implements BalancePort {
 
     private final LoadExpensePort loadExpensePort;
 
-    public BalanceService(LoadExpensePort loadExpensePort) {
+    private final LoadUserPort loadUserPort;
+
+    public BalanceService(LoadExpensePort loadExpensePort, LoadUserPort loadUserPort) {
         this.loadExpensePort = loadExpensePort;
+        this.loadUserPort = loadUserPort;
     }
 
 
@@ -32,13 +37,16 @@ public class BalanceService implements BalancePort {
         List<Expense> allExpenses = loadExpensePort.loadAll();
         if (allExpenses.isEmpty()) return new ArrayList<>();
 
+        List<User> allUsers = loadUserPort.loadAll();
+        BigDecimal numUsers = new BigDecimal(allUsers.size());
+
         // Calculate which amount of money each person owes
-        BigDecimal totalPerPerson = (allExpenses.stream()
+        BigDecimal totalAmount = (allExpenses.stream()
                 .map(Expense::getAmount)
                 .collect(Collectors.toList())
                 .stream()
-                .reduce(BigDecimal.ZERO, BigDecimal::add))
-                .divide(BigDecimal.valueOf(allExpenses.size()), 2, RoundingMode.HALF_UP);
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+
 
         // Calculate total amount each person
         Map<String, BigDecimal> expensesPersonDict = new HashMap<String, BigDecimal>();
@@ -58,10 +66,9 @@ public class BalanceService implements BalancePort {
 
             Balance balance = new Balance();
             balance.setUserId(Long.parseLong(key));
-            balance.setAmount(value.subtract(totalPerPerson));
+            balance.setAmount(value.subtract(totalAmount.divide(numUsers)));
             balanceList.add(balance);
         }
         return balanceList;
-
     }
 }
