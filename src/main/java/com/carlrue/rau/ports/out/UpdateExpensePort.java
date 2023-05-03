@@ -8,4 +8,5 @@ public interface UpdateExpensePort {
     void update(Expense expense);
 
     void delete(Long id);
+    void deleteAll();
 }

@@ -60,4 +60,13 @@ public class SaveExpenseService implements SaveExpensePort {
         return true;
     }
 
+    @Transactional
+    @Override
+    public boolean deleteAll() {
+
+        updateExpensePort.deleteAll();
+
+        return true;
+    }
+
 }

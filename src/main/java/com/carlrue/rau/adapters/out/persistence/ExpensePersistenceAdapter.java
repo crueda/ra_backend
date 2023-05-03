@@ -50,4 +50,10 @@ public class ExpensePersistenceAdapter implements LoadExpensePort, UpdateExpense
                 .orElseThrow(RuntimeException::new);
         expenseRepository.delete(expense);
     }
+
+    @Override
+    public void deleteAll() {
+        expenseRepository.deleteAll();
+    }
+
 }
