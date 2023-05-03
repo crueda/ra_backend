@@ -2,6 +2,7 @@ package com.carlrue.rau.domain.usecases;
 
 import com.carlrue.rau.common.UseCase;
 import com.carlrue.rau.domain.entities.Expense;
+import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.in.ReadExpensePort;
 import com.carlrue.rau.ports.out.LoadExpensePort;
 
@@ -17,6 +18,13 @@ public class ReadExpenseService implements ReadExpensePort {
         this.loadExpensePort = loadExpensePort;
     }
 
+    @Transactional
+    @Override
+    public Expense read(Long id) {
+        Expense expense = loadExpensePort.load(id);
+
+        return expense;
+    }
 
     @Transactional
     @Override

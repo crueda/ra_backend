@@ -3,6 +3,7 @@ package com.carlrue.rau.adapters.out.persistence;
 import com.carlrue.rau.common.PersistenceAdapter;
 import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.domain.entities.Expense;
+import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.out.LoadExpensePort;
 import com.carlrue.rau.ports.out.UpdateExpensePort;
 
@@ -18,6 +19,15 @@ public class ExpensePersistenceAdapter implements LoadExpensePort, UpdateExpense
         this.expenseRepository = expenseRepository;
     }
 
+    @Override
+    public Expense load(Long id) {
+        return expenseRepository
+                .findById(id)
+                .map(ExpenseMapper::entityToDomain)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Expense", "Id", id)
+                );
+    }
 
     @Override
     public List<Expense> loadAll() {

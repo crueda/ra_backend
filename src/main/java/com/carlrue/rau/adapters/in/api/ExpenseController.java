@@ -1,5 +1,7 @@
 package com.carlrue.rau.adapters.in.api;
 
+import com.carlrue.rau.adapters.out.persistence.ExpenseEntity;
+import com.carlrue.rau.adapters.out.persistence.ExpenseMapper;
 import com.carlrue.rau.common.WebAdapter;
 import com.carlrue.rau.domain.entities.Expense;
 import com.carlrue.rau.ports.in.ReadExpensePort;
@@ -75,6 +77,15 @@ public class ExpenseController {
         Long id = (long)expenseRequest.getId();
 
         saveExpensePort.delete(id);
+    }
+
+    @GetMapping("/api/expense/{id}")
+    @CrossOrigin(origins = "*")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ExpenseEntity readExpense(@PathVariable Long id) {
+
+        Expense expense = readExpensePort.read(id);
+        return ExpenseMapper.domainToEntity(expense);
     }
 
     @GetMapping("/api/expenses")

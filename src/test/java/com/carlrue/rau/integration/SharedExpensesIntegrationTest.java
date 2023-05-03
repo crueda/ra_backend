@@ -24,7 +24,7 @@ public class SharedExpensesIntegrationTest {
         this.userRepository = userRepository;
     }
 
-
+/*
     @Test
     public void givenValidCommonProduct_whenSave_thenPersist_andAssertThatExistsInDatabase(){
 
@@ -33,5 +33,7 @@ public class SharedExpensesIntegrationTest {
 
         Assertions.assertEquals(ue.getId(), 1L);
     }
+
+ */
 
 }

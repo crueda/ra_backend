@@ -18,8 +18,8 @@ public class InitUsers implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        this.extra.save(new UserEntity(null, "andrea", "Andrea Ruiz Del Alamo", "andrea@sharedexpenses.com"));
-        this.extra.save(new UserEntity(null, "juan", "Juan De La Torre Mayor", "juan@sharedexpenses.com"));
+        this.extra.save(new UserEntity(null, "andrea", "Andrea Ruiz del Alamo", "andrea@sharedexpenses.com"));
+        this.extra.save(new UserEntity(null, "juan", "Juan de la Torre Mayor", "juan@sharedexpenses.com"));
         this.extra.save(new UserEntity(null, "felipe", "Felipe González Izquierdo", "felipe@sharedexpenses.com"));
         this.extra.save(new UserEntity(null, "laura", "Laura Iglesias Ortega", "laura@sharedexpenses.com"));
     }
