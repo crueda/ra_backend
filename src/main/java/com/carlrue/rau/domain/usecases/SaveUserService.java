@@ -1,5 +1,6 @@
 package com.carlrue.rau.domain.usecases;
 
+import com.carlrue.rau.common.exception.ResourceInvalidException;
 import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.in.SaveUserCommand;
 import com.carlrue.rau.ports.in.SaveUserPort;
@@ -29,6 +30,9 @@ public class SaveUserService implements SaveUserPort {
         user.setName(command.getName());
         user.setEmail(command.getEmail());
 
+        if (!user.usernameIsValid()) {
+            throw new ResourceInvalidException("User", "Username", user.getUsername());
+        }
         updateUserPort.save(user);
 
         return true;
@@ -44,6 +48,9 @@ public class SaveUserService implements SaveUserPort {
         user.setName(command.getName());
         user.setEmail(command.getEmail());
 
+        if (!user.usernameIsValid()) {
+            throw new ResourceInvalidException("User", "Username", user.getUsername());
+        }
         updateUserPort.update(user);
 
         return true;

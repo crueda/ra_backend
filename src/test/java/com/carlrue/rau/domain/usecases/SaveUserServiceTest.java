@@ -1,4 +1,4 @@
-package com.carlrue.rau.usecases;
+package com.carlrue.rau.domain.usecases;
 
 
 import com.carlrue.rau.domain.entities.User;
