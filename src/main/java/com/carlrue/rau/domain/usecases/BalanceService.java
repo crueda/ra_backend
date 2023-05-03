@@ -60,9 +60,14 @@ public class BalanceService implements BalancePort {
         }
 
         List<Balance> balanceList = new ArrayList<>();
-        for (Map.Entry<String, BigDecimal> entry : expensesPersonDict.entrySet()) {
-            String key = entry.getKey();
-            BigDecimal value = entry.getValue();
+        for (User entryUser : allUsers) {
+            String key = String.valueOf(entryUser.getId());
+            BigDecimal value;
+            if (expensesPersonDict.containsKey(key)) {
+                value = expensesPersonDict.get(key);
+            } else {
+                value = new BigDecimal(0);
+            }
 
             Balance balance = new Balance();
             balance.setUserId(Long.parseLong(key));
