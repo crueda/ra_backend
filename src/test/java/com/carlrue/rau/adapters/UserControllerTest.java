@@ -168,7 +168,7 @@ class UserControllerTest {
     @Test
     void tryingToDeleteNotExistingUserIdThenReturns404() throws Exception {
         long id = 6L;
-        doReturn(false).when(saveUserService).delete(id);
+        when(saveUserService.delete(id)).thenThrow(ResourceNotFoundException.class);
 
         UserEntity userEntity = new UserEntity();
         userEntity.setId(id);

@@ -21,17 +21,16 @@ public class ReadExpenseService implements ReadExpensePort {
     @Transactional
     @Override
     public Expense read(Long id) {
-        Expense expense = loadExpensePort.load(id);
 
-        return expense;
+        return loadExpensePort.load(id);
     }
 
     @Transactional
     @Override
     public List<Expense> readAll() {
-        List<Expense> expenses = loadExpensePort.loadAll();
 
-        return expenses;
+        return loadExpensePort.loadAll();
+
     }
 
 }

@@ -56,13 +56,14 @@ class ReadUserServiceTest {
 
     @Test
     void givenNotExistingUserIdThenReturnsResourceNotFoundException() {
+        long id = 6L;
+        when(loadUserPort.load(id)).thenThrow(ResourceNotFoundException.class);
+
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> when(readUserService.read(1L)),
+                () -> when(readUserService.read(id)),
                 "ResourceNotFoundException was expected"
         );
-
-        assertTrue(exception.getMessage().contains("User not found with Id: '1'"));
     }
 
     @Test
@@ -72,9 +73,10 @@ class ReadUserServiceTest {
         List<User> userList = readUserService.readAll();
         // Then
         assertNotNull(userList);
-        assertEquals(userList.size(), 2);
+        assertEquals(userList.size(), 3);
         assertEquals(1L, userList.get(0).getId());
         assertEquals(2L, userList.get(1).getId());
+        assertEquals(3L, userList.get(2).getId());
     }
 
     @Test

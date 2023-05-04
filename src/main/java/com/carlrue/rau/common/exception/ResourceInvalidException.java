@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class ResourceInvalidException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-    private String resourceName;
-    private String fieldName;
-    private Object fieldValue;
+    private final String resourceName;
+    private final String fieldName;
+    private final Object fieldValue;
 
     public ResourceInvalidException(String resourceName, String fieldName, Object fieldValue) {
         super(String.format("%s not found with %s: '%s'", resourceName, fieldName, fieldValue));

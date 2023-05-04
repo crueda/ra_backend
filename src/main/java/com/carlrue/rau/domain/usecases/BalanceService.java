@@ -49,7 +49,7 @@ public class BalanceService implements BalancePort {
 
 
         // Calculate total amount each person
-        Map<String, BigDecimal> expensesPersonDict = new HashMap<String, BigDecimal>();
+        Map<String, BigDecimal> expensesPersonDict = new HashMap<>();
         for (Expense expense : allExpenses) {
             String dictKey = String.valueOf(expense.getUserId());
             if (expensesPersonDict.containsKey(dictKey)) {

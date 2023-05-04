@@ -37,7 +37,7 @@ public class ExpenseController {
 
         Long userId = (long)expenseRequest.getUserId();
         BigDecimal amount = expenseRequest.getAmount();
-        String description = new String(expenseRequest.getDescription());
+        String description = expenseRequest.getDescription();
         Long timestamp = (long)expenseRequest.getTimestamp();
 
         SaveExpenseCommand command = new SaveExpenseCommand(null,
@@ -57,7 +57,7 @@ public class ExpenseController {
         Long id = (long)expenseRequest.getId();
         Long userId = (long)expenseRequest.getUserId();
         BigDecimal amount = expenseRequest.getAmount();
-        String description = new String(expenseRequest.getDescription());
+        String description = expenseRequest.getDescription();
         Long timestamp = (long)expenseRequest.getTimestamp();
 
         SaveExpenseCommand command = new SaveExpenseCommand(id,
