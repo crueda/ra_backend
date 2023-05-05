@@ -71,7 +71,8 @@ public class BalanceService implements BalancePort {
 
             Balance balance = new Balance();
             balance.setUserId(Long.parseLong(key));
-            balance.setAmount(value.subtract(totalAmount.divide(numUsers)));
+            BigDecimal totalPerUser = totalAmount.divide(numUsers, RoundingMode.HALF_UP);
+            balance.setAmount(value.subtract(totalPerUser));
             balanceList.add(balance);
         }
         return balanceList;
