@@ -48,6 +48,8 @@ public class UserPersistenceAdapter implements LoadUserPort, UpdateUserPort {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User", "Id", user.getId())
                 );
+        userToUpdate.setName(user.getName());
+        userToUpdate.setEmail(user.getEmail());
 
         userRepository.save(UserMapper.domainToEntity(userToUpdate));
 
