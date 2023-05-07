@@ -49,8 +49,6 @@ class ExpenseControllerTest {
     @BeforeEach
     void setUp() {
         this.expectedExpenseList = new ArrayList<>();
-        this.expectedExpenseList.add(new ExpenseEntity(1L, 1L, BigDecimal.valueOf(12), "Compra en el supermercado", 1683097284869L));
-        this.expectedExpenseList.add(new ExpenseEntity(2L, 1L, BigDecimal.valueOf(20), "Pago adicional", 1683099313859L));
     }
 
 

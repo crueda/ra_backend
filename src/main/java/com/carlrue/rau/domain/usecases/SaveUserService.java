@@ -1,6 +1,7 @@
 package com.carlrue.rau.domain.usecases;
 
 import com.carlrue.rau.common.exception.ResourceInvalidException;
+import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.in.SaveUserCommand;
 import com.carlrue.rau.ports.in.SaveUserPort;
@@ -60,6 +61,7 @@ public class SaveUserService implements SaveUserPort {
     @Override
     public boolean delete(Long id) {
         User user = loadUserPort.load(id);
+
         updateUserPort.delete(user.getId());
 
         return true;

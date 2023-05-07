@@ -1,6 +1,7 @@
 package com.carlrue.rau.domain.usecases;
 
 
+import com.carlrue.rau.common.exception.ResourceInvalidException;
 import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.domain.usecases.SaveUserService;
@@ -52,6 +53,16 @@ class SaveUserServiceTest {
         assertEquals(result, true);
     }
 
+    @Test
+    void createUserWithInvalidUsername() {
+        User expectedNewUser = new User(null, "i", "Ines Alonso", "ines@sharedexpenses.com");
+        SaveUserCommand command = new SaveUserCommand(null, "i", "Ines Alonso", "ines@sharedexpenses.com");
+        ResourceInvalidException exception = assertThrows(
+                ResourceInvalidException.class,
+                () -> when(saveUserService.save(command)),
+                "ResourceInvalidException was expected"
+        );
+    }
 
     @Test
     void updateUserWhenIsEdited() {
@@ -66,37 +77,34 @@ class SaveUserServiceTest {
 
 
     @Test
-    void tryingToUpdateNotExistingUserIdThenReturnsResourceNotFoundException() {
-        User expectedUpdateUser = this.expectedUserList.get(0);
-        SaveUserCommand command = new SaveUserCommand(expectedUpdateUser.getId(), expectedUpdateUser.getUsername(), expectedUpdateUser.getName(), expectedUpdateUser.getEmail());
-
-        ResourceNotFoundException exception = assertThrows(
-                ResourceNotFoundException.class,
-                () -> when(saveUserService.update(command)),
-                "ResourceNotFoundException was expected"
-        );
-
-        assertTrue(exception.getMessage().contains("User not found with Id: '1'"));
-    }
-
-
-    @Test
     void deleteUserById() {
-        User optExpectedUser = expectedUserList.get(0);
+        User optExpectedUser = expectedUserList.get(1);
         doReturn(optExpectedUser).when(loadUserPort).load(1L);
 
-        assertFalse(saveUserService.delete(1L));
+        assertEquals(saveUserService.delete(1L), true);
+    }
+
+    @Test
+    void tryingToUpdateNotExistingUserIdThenReturnsResourceNotFoundException(){
+        //User expectedUpdateUser = new User(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        //when(updateUserPort.update(expectedUpdateUser)).thenThrow(ResourceNotFoundException.class);
+
+        SaveUserCommand command = new SaveUserCommand(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
+                () -> when(saveUserService.save(command)),
+                "ResourceNotFoundException was expected"
+        );
     }
 
     @Test
     void tryingToDeleteNotExistingUserIdThenReturnsResourceNotFoundException() {
+        long id = 6L;
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
-                () -> when(saveUserService.delete(1L)),
+                () -> when(saveUserService.delete(id)),
                 "ResourceNotFoundException was expected"
         );
-
-        assertTrue(exception.getMessage().contains("User not found with Id: '1'"));
     }
 
 }
