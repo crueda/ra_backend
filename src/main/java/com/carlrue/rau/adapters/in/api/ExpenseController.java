@@ -96,4 +96,12 @@ public class ExpenseController {
 
         return new ResponseEntity<>(expenses, HttpStatus.OK);
     }
+
+    @GetMapping("/api/expenses/settle")
+    @CrossOrigin(origins = "*")
+    @ResponseStatus(code = HttpStatus.OK)
+    void deleteAllExpenses() {
+        saveExpensePort.deleteAll();
+    }
+
 }
