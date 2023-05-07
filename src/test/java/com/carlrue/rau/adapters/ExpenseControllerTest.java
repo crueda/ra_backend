@@ -3,7 +3,9 @@ package com.carlrue.rau.adapters;
 import com.carlrue.rau.adapters.in.api.ExpenseController;
 import com.carlrue.rau.adapters.out.persistence.ExpenseEntity;
 import com.carlrue.rau.adapters.out.persistence.ExpenseMapper;
+import com.carlrue.rau.adapters.out.persistence.UserEntity;
 import com.carlrue.rau.common.exception.ResourceNotFoundException;
+import com.carlrue.rau.domain.entities.Expense;
 import com.carlrue.rau.domain.usecases.ReadExpenseService;
 import com.carlrue.rau.domain.usecases.SaveExpenseService;
 import com.carlrue.rau.ports.in.SaveExpenseCommand;
@@ -49,6 +51,9 @@ class ExpenseControllerTest {
     @BeforeEach
     void setUp() {
         this.expectedExpenseList = new ArrayList<>();
+        this.expectedExpenseList.add(new ExpenseEntity(1L, 1L, BigDecimal.valueOf(12), "Compra en el supermercado", 1683097284869L));
+        this.expectedExpenseList.add(new ExpenseEntity(2L, 1L, BigDecimal.valueOf(20), "Pago adicional", 1683099313859L));
+
     }
 
 
