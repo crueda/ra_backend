@@ -3,7 +3,6 @@ package com.carlrue.rau.adapters.out.persistence;
 import com.carlrue.rau.common.PersistenceAdapter;
 import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.domain.entities.Expense;
-import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.out.LoadExpensePort;
 import com.carlrue.rau.ports.out.UpdateExpensePort;
 
@@ -42,28 +41,39 @@ public class ExpensePersistenceAdapter implements LoadExpensePort, UpdateExpense
     }
 
     @Override
-    public void update(Expense expense) {
+    public boolean update(Expense expense) {
 
         expenseRepository.save(ExpenseMapper.domainToEntity(expense));
+
+        return true;
     }
 
     @Override
-    public void save(Expense expense) {
+    public boolean save(Expense expense) {
 
         expenseRepository.save(ExpenseMapper.domainToEntity(expense));
+
+        return true;
     }
 
     @Override
-    public void delete(Long id) {
-        ExpenseEntity expense = expenseRepository
+    public boolean delete(Long id) {
+        Expense expenseToDelete = expenseRepository
                 .findById(id)
-                .orElseThrow(RuntimeException::new);
-        expenseRepository.delete(expense);
+                .map(ExpenseMapper::entityToDomain)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Expense", "Id", id)
+                );
+        expenseRepository.delete(ExpenseMapper.domainToEntity(expenseToDelete));
+
+        return true;
     }
 
     @Override
-    public void deleteAll() {
+    public boolean deleteAll() {
         expenseRepository.deleteAll();
+
+        return true;
     }
 
 }

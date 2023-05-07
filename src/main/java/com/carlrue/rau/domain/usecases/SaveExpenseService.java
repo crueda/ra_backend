@@ -2,6 +2,7 @@ package com.carlrue.rau.domain.usecases;
 
 import com.carlrue.rau.common.UseCase;
 import com.carlrue.rau.domain.entities.Expense;
+import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.in.SaveExpenseCommand;
 import com.carlrue.rau.ports.in.SaveExpensePort;
 import com.carlrue.rau.ports.out.LoadExpensePort;
@@ -54,8 +55,9 @@ public class SaveExpenseService implements SaveExpensePort {
     @Transactional
     @Override
     public boolean delete(Long id) {
+        Expense expense = loadExpensePort.load(id);
 
-        updateExpensePort.delete(id);
+        updateExpensePort.delete(expense.getId());
 
         return true;
     }

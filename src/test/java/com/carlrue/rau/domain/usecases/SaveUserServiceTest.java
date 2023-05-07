@@ -85,21 +85,10 @@ class SaveUserServiceTest {
     }
 
     @Test
-    void tryingToUpdateNotExistingUserIdThenReturnsResourceNotFoundException(){
-        //User expectedUpdateUser = new User(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
-        //when(updateUserPort.update(expectedUpdateUser)).thenThrow(ResourceNotFoundException.class);
-
-        SaveUserCommand command = new SaveUserCommand(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
-        ResourceNotFoundException exception = assertThrows(
-                ResourceNotFoundException.class,
-                () -> when(saveUserService.save(command)),
-                "ResourceNotFoundException was expected"
-        );
-    }
-
-    @Test
     void tryingToDeleteNotExistingUserIdThenReturnsResourceNotFoundException() {
         long id = 6L;
+        when(loadUserPort.load(id)).thenThrow(ResourceNotFoundException.class);
+
         ResourceNotFoundException exception = assertThrows(
                 ResourceNotFoundException.class,
                 () -> when(saveUserService.delete(id)),
@@ -107,4 +96,16 @@ class SaveUserServiceTest {
         );
     }
 
+    @Test
+    void tryingToUpdateNotExistingUserIdThenReturnsResourceNotFoundException(){
+        long id = 6L;
+        when(loadUserPort.load(id)).thenThrow(ResourceNotFoundException.class);
+
+        SaveUserCommand command = new SaveUserCommand(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
+                () -> when(saveUserService.update(command)),
+                "ResourceNotFoundException was expected"
+        );
+    }
 }
