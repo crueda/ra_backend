@@ -2,6 +2,7 @@ package com.carlrue.rau.adapters.in.api;
 
 import com.carlrue.rau.adapters.out.persistence.ExpenseEntity;
 import com.carlrue.rau.adapters.out.persistence.ExpenseMapper;
+import com.carlrue.rau.common.ApiAdapter;
 import com.carlrue.rau.common.WebAdapter;
 import com.carlrue.rau.domain.entities.Expense;
 import com.carlrue.rau.ports.in.ReadExpensePort;
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@WebAdapter
-@RestController
+@ApiAdapter
 @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 public class ExpenseController {
 

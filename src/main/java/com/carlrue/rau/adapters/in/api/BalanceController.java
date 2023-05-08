@@ -1,5 +1,6 @@
 package com.carlrue.rau.adapters.in.api;
 
+import com.carlrue.rau.common.ApiAdapter;
 import com.carlrue.rau.domain.entities.Balance;
 import com.carlrue.rau.ports.in.BalancePort;
 import com.carlrue.rau.common.WebAdapter;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @WebAdapter
-@RestController
+@ApiAdapter
 public class BalanceController {
 
     private final BalancePort balancePort;

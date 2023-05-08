@@ -1,5 +1,6 @@
 package com.carlrue.rau.adapters.in.api;
 
+import com.carlrue.rau.common.ApiAdapter;
 import com.carlrue.rau.ports.in.SaveUserCommand;
 import com.carlrue.rau.ports.in.SaveUserPort;
 import com.carlrue.rau.ports.in.ReadUserPort;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@WebAdapter
-@RestController
+
+@ApiAdapter
 @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 public class UserController {
 

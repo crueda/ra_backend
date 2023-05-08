@@ -1,6 +1,7 @@
 package com.carlrue.rau.domain.usecases;
 
 
+import com.carlrue.rau.common.exception.ResourceInvalidException;
 import com.carlrue.rau.common.exception.ResourceNotFoundException;
 import com.carlrue.rau.domain.entities.Expense;
 import com.carlrue.rau.ports.in.SaveExpenseCommand;
@@ -26,7 +27,6 @@ class SaveExpenseServiceTest {
 
     @Mock
     private LoadExpensePort loadExpensePort;
-
     @Mock
     private UpdateExpensePort updateExpensePort;
 
@@ -81,6 +81,28 @@ class SaveExpenseServiceTest {
                 ResourceNotFoundException.class,
                 () -> when(saveExpenseService.delete(id)),
                 "ResourceNotFoundException was expected"
+        );
+    }
+
+    @Test
+    void createExpenseWithInvalidAmount() {
+        Expense expense = new Expense(null,1L, BigDecimal.valueOf(-112), "Compra en el supermercado", 1683097284869L);
+        SaveExpenseCommand command = new SaveExpenseCommand(null, expense.getUserId(),  expense.getAmount(),  expense.getDescription(),  expense.getTimestamp());
+        ResourceInvalidException exception = assertThrows(
+                ResourceInvalidException.class,
+                () -> when(saveExpenseService.save(command)),
+                "ResourceInvalidException was expected"
+        );
+    }
+
+    @Test
+    void updateExpenseWithInvalidAmount() {
+        Expense expense = new Expense(null,1L, BigDecimal.valueOf(-112), "Compra en el supermercado", 1683097284869L);
+        SaveExpenseCommand command = new SaveExpenseCommand(null, expense.getUserId(),  expense.getAmount(),  expense.getDescription(),  expense.getTimestamp());
+        ResourceInvalidException exception = assertThrows(
+                ResourceInvalidException.class,
+                () -> when(saveExpenseService.update(command)),
+                "ResourceInvalidException was expected"
         );
     }
 

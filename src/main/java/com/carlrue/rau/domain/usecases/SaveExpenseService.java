@@ -1,6 +1,7 @@
 package com.carlrue.rau.domain.usecases;
 
 import com.carlrue.rau.common.UseCase;
+import com.carlrue.rau.common.exception.ResourceInvalidException;
 import com.carlrue.rau.domain.entities.Expense;
 import com.carlrue.rau.domain.entities.User;
 import com.carlrue.rau.ports.in.SaveExpenseCommand;
@@ -31,6 +32,10 @@ public class SaveExpenseService implements SaveExpensePort {
         expense.setDescription(command.getDescription());
         expense.setTimestamp(command.getTimestamp());
 
+        if (!expense.expenseIsValid()) {
+            throw new ResourceInvalidException("User", "Expense", expense.getAmount());
+        }
+
         updateExpensePort.save(expense);
 
         return true;
@@ -46,6 +51,10 @@ public class SaveExpenseService implements SaveExpensePort {
         expense.setAmount(command.getAmount());
         expense.setDescription(command.getDescription());
         expense.setTimestamp(command.getTimestamp());
+
+        if (!expense.expenseIsValid()) {
+            throw new ResourceInvalidException("User", "Expense", expense.getAmount());
+        }
 
         updateExpensePort.update(expense);
 

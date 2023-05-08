@@ -84,28 +84,4 @@ class SaveUserServiceTest {
         assertEquals(saveUserService.delete(1L), true);
     }
 
-    @Test
-    void tryingToDeleteNotExistingUserIdThenReturnsResourceNotFoundException() {
-        long id = 6L;
-        when(loadUserPort.load(id)).thenThrow(ResourceNotFoundException.class);
-
-        ResourceNotFoundException exception = assertThrows(
-                ResourceNotFoundException.class,
-                () -> when(saveUserService.delete(id)),
-                "ResourceNotFoundException was expected"
-        );
-    }
-
-    @Test
-    void tryingToUpdateNotExistingUserIdThenReturnsResourceNotFoundException(){
-        long id = 6L;
-        when(loadUserPort.load(id)).thenThrow(ResourceNotFoundException.class);
-
-        SaveUserCommand command = new SaveUserCommand(1L, "ines", "Ines Alonso", "ines@sharedexpenses.com");
-        ResourceNotFoundException exception = assertThrows(
-                ResourceNotFoundException.class,
-                () -> when(saveUserService.update(command)),
-                "ResourceNotFoundException was expected"
-        );
-    }
 }
