@@ -68,8 +68,11 @@ class ReadUserServiceTest {
 
     @Test
     void getAllUsers() {
+        // Given
         doReturn(this.expectedUserList).when(loadUserPort).loadAll();
+
         // When
+
         List<User> userList = readUserService.readAll();
         // Then
         assertNotNull(userList);
@@ -81,6 +84,7 @@ class ReadUserServiceTest {
 
     @Test
     void getEmptyListWhenThereIsNoUsers() {
+        // Given
         List<User> expectedUserList = new ArrayList<>();
         doReturn(expectedUserList).when(loadUserPort).loadAll();
 

@@ -66,9 +66,12 @@ class ReadExpenseServiceTest {
 
     @Test
     void getAllExpenses() {
+        // Given
         doReturn(this.expectedExpenseList).when(loadExpensePort).loadAll();
+
         // When
         List<Expense> expenseList = readExpenseService.readAll();
+
         // Then
         assertNotNull(expenseList);
         assertEquals(expenseList.size(), 2);
@@ -78,6 +81,7 @@ class ReadExpenseServiceTest {
 
     @Test
     void getEmptyListWhenThereIsNoExpenses() {
+        // Given
         List<Expense> expectedExpenseList = new ArrayList<>();
         doReturn(expectedExpenseList).when(loadExpensePort).loadAll();
 
